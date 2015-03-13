@@ -9,7 +9,7 @@ class Pyxel:
         self.rect = Rect(self.x, self.y, 1, 1)
         self.targetX = 0
         self.targetY = 0
-        self.speed = 3.0
+        self.speed = 20.0
         self.adjustment = .20
         self.direction = Vector(self.x, self.y, self.targetX, self.targetY, self.adjustment)
         self.color = color

@@ -11,10 +11,15 @@ screen = pygame.display.set_mode((width, height))
 
 pyxs = []
 
-for i in range(100):
-    pass
+for i in range(10000):
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    a = 255
+    x = random.randint(0, 1280)
+    y = random.randint(0, 720)
 
-pyxs.append(Pyxel(200, 200, pygame.Color('white')))
+    pyxs.append(Pyxel(x, y, pygame.Color(r, g, b, a)))
 #pyxs.append(Pyxel(250, 250, pygame.Color("white")))
 #pyxs.append(Pyxel(300, 300, pygame.Color("white")))
 #pyxs.append(Pyxel(350, 350, pygame.Color("white")))
@@ -34,5 +39,6 @@ while True:
 
 
     pygame.display.flip()
-    clock.tick(60)
+    screen.fill((0, 0, 0))
+    clock.tick()
     print clock.get_fps()
