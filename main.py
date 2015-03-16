@@ -12,8 +12,12 @@ def getClosestColor(color, colorList):
     for gpyx in colorList:
         c = gpyx.color
         deltaR = mathModule(c.r - color.r)
+        deltaR *= deltaR
         deltaG = mathModule(c.g - color.g)
+        deltaG *= deltaG
         deltaB = mathModule(c.b - color.b)
+        deltaB *= deltaB
+        #print deltaR, deltaG, deltaB
         deltas.append(deltaR + deltaG + deltaB)
 
     return deltas.index(min(deltas))
@@ -31,10 +35,11 @@ pyxs = []
 gpyxs = []
 
 #create points to be followed
-gpyxs.append(Pyxel(237, 512, pygame.Color(255, 0, 0, 255)))
-gpyxs.append(Pyxel(535, 578, pygame.Color(0, 255, 0, 255)))
-gpyxs.append(Pyxel(1000, 250, pygame.Color(0, 0, 255, 255)))
-gpyxs.append(Pyxel(400, 200, pygame.Color(255, 255, 255, 255)))
+gpyxs.append(Pyxel(200, 120, pygame.Color(255, 0, 0, 255)))
+gpyxs.append(Pyxel(400, 240, pygame.Color(0, 255, 0, 255)))
+gpyxs.append(Pyxel(600, 360, pygame.Color(0, 0, 255, 255)))
+gpyxs.append(Pyxel(800, 480, pygame.Color(255, 255, 255, 255)))
+gpyxs.append(Pyxel(1000, 600, pygame.Color(255, 255, 0, 255)))
 
 #create all moving points
 for i in range(width/10):
@@ -74,7 +79,8 @@ while True:
             pyx.direction.adjustToPoint(pyx.x, pyx.y, pyx.dX, pyx.dY)
             pyx.move()
 
-        pygame.draw.rect(screen, pyx.color, pyx.rect, 1)
+        pygame.draw.rect(screen, pyx.color, pyx.rect, 1)#draws empty squares
+        #pygame.draw.circle(screen, pyx.color, (pyx.rect.x, pyx.rect.y), pyx.rect.width/2)#draws filled circles
 
 
     pygame.display.flip()
