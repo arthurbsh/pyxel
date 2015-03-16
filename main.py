@@ -1,6 +1,14 @@
 import pygame
 from pyxel import *
 import random
+from PIL import Image
+im = Image.open("./images/image.jpg") #Can be many different formats.
+pix = im.load()
+
+
+#print im.size #Get the width and hight of the image for iterating over
+
+
 
 def mathModule(x):
     if(x< 0):
@@ -28,8 +36,8 @@ height = 720
 
 clock = pygame.time.Clock()
 
-#screen = pygame.display.set_mode((width, height))
-screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((width, height))
+#screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 
 pyxs = []
 gpyxs = []
@@ -44,14 +52,14 @@ gpyxs.append(Pyxel(1000, 600, pygame.Color(255, 255, 0, 255)))
 #create all moving points
 for i in range(width/10):
     for j in range(height/10):
-        r = random.randint(0, 255)
-        g = random.randint(0, 255)
-        b = random.randint(0, 255)
+        r, g, b = pix[i,j]
+        #r = random.randint(0, 255)
+        #g = random.randint(0, 255)
+        #b = random.randint(0, 255)
         a = 255
         x = i*10
         y = j*10
-    #x = random.randint(0, width)
-    #y = random.randint(0, height)
+        r, g, b = pix[x,y]
 
         color = pygame.Color(r, g, b, a)
 
@@ -66,7 +74,7 @@ while True:
 
     tx, ty = pygame.mouse.get_pos()
 
-    for pyx in pyxs:
+    for pyx in gpyxs:
         if pygame.mouse.get_pressed()[0]:#movement based on mouse position
             pyx.direction.adjustToPoint(pyx.x, pyx.y, tx, ty)
             pyx.move()
@@ -79,8 +87,8 @@ while True:
             pyx.direction.adjustToPoint(pyx.x, pyx.y, pyx.dX, pyx.dY)
             pyx.move()
 
-        pygame.draw.rect(screen, pyx.color, pyx.rect, 1)#draws empty squares
-        #pygame.draw.circle(screen, pyx.color, (pyx.rect.x, pyx.rect.y), pyx.rect.width/2)#draws filled circles
+        #pygame.draw.rect(screen, pyx.color, pyx.rect, 0)#draws empty squares
+        pygame.draw.circle(screen, pyx.color, (pyx.rect.x, pyx.rect.y), pyx.rect.width/2)#draws filled circles
 
 
     pygame.display.flip()
