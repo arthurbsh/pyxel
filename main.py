@@ -6,6 +6,7 @@ im = Image.open("./images/image.jpg") #Can be many different formats.
 cam = Image.open("./images/webcam.jpg")
 pix = im.load()
 webcam = pygame.image.load("./images/webcam.jpg")
+ima = pygame.image.load("./images/image.jpg")
 
 camw = webcam.get_width()
 camh = webcam.get_height()
@@ -131,7 +132,9 @@ for i in range(width/10):
         y = j*10
         r, g, b = pix[x,y]
 
-        color = pygame.Color(r, g, b, a)
+        c = pygame.transform.average_color(ima, Rect(x, y, 10, 10))
+        color = pygame.Color(c[0], c[1],c[2], c[3])
+        #color = pygame.Color(r, g, b, a)
 
         gpyx = gpyxs[getClosestColor(color, gpyxs)]
 
@@ -157,16 +160,30 @@ while True:
             pyx.direction.adjustToPoint(pyx.x, pyx.y, pyx.dX, pyx.dY)
             pyx.move()
 
-        pygame.draw.rect(screen, pyx.color, pyx.rect, 1)#draws empty squares
-        #pygame.draw.circle(screen, pyx.color, (pyx.rect.x, pyx.rect.y), pyx.rect.width/2)#draws filled circles
+        #pygame.draw.rect(screen, pyx.color, pyx.rect, 1)#draws empty squares
+
+
+
+        if((pyx.x, pyx.y)==(pyx.iX, pyx.iY)):
+            #pass
+            screen.blit(ima, (pyx.rect.x, pyx.rect.y), (pyx.rect.x, pyx.rect.y, pyx.rect.width, pyx.rect.height))
+        else:
+            #pass
+            pygame.draw.circle(screen, pyx.color, (pyx.rect.x, pyx.rect.y), pyx.rect.width/2)#draws filled circles
+
+    #screen.blit(ima, pygame.Rect(20, 20, 50, 50))
 
 
     for d in gpyxs:
         #pygame.draw.rect(screen, d.color, d.rect, 1)
         pass
+    for group in groups:
+        for d in group:
+            pass
+            #pygame.draw.rect(screen, d.color, d.rect, 1)
 
     pygame.display.flip()
     screen.fill((0, 0, 0))
-    clock.tick(20)
-    #print clock.get_fps()
+    clock.tick()
+    print clock.get_fps()
     #print pygame.mouse.get_pressed()
